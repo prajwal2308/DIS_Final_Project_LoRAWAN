@@ -1,0 +1,33 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mesh-starter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mesh-starter
+  template:
+    metadata:
+      labels:
+        app: mesh-starter
+    spec:
+      containers:
+      - name: mesh-node
+        image: mesh-node:latest
+        imagePullPolicy: Never
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: START_NODE
+          value: "true"
+        - name: LISTEN_PORT
+          value: "5000"
+        - name: NEXT_NODES
+          value: "mesh-node.default.svc.cluster.local:5000"
+  # Placeholder; mesh forwarding logic should handle this
+        ports:
+        - containerPort: 5000

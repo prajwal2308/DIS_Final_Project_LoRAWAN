@@ -1,0 +1,2170 @@
+networks:
+  meshnet1:
+    driver: bridge
+  meshnet2:
+    driver: bridge
+  meshnet3:
+    driver: bridge
+  meshnet4:
+    driver: bridge
+services:
+  bridge_meshnet1_meshnet2:
+    build: .
+    container_name: bridge_meshnet1_meshnet2
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=bridge_meshnet1_meshnet2
+    - LISTEN_PORT=5121
+    - NEXT_NODES=node23:5023,node32:5032,node38:5038
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - bridge_meshnet1_meshnet2
+      meshnet2:
+        aliases:
+        - bridge_meshnet1_meshnet2
+  bridge_meshnet1_meshnet3:
+    build: .
+    container_name: bridge_meshnet1_meshnet3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=bridge_meshnet1_meshnet3
+    - LISTEN_PORT=5122
+    - NEXT_NODES=node14:5014,node71:5071,node7:5007
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - bridge_meshnet1_meshnet3
+      meshnet3:
+        aliases:
+        - bridge_meshnet1_meshnet3
+  bridge_meshnet1_meshnet4:
+    build: .
+    container_name: bridge_meshnet1_meshnet4
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=bridge_meshnet1_meshnet4
+    - LISTEN_PORT=5123
+    - NEXT_NODES=bridge_meshnet1_meshnet3:5122,node113:5113,node106:5106
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - bridge_meshnet1_meshnet4
+      meshnet4:
+        aliases:
+        - bridge_meshnet1_meshnet4
+  bridge_meshnet2_meshnet3:
+    build: .
+    container_name: bridge_meshnet2_meshnet3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=bridge_meshnet2_meshnet3
+    - LISTEN_PORT=5124
+    - NEXT_NODES=node67:5067,node70:5070,node82:5082
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - bridge_meshnet2_meshnet3
+      meshnet3:
+        aliases:
+        - bridge_meshnet2_meshnet3
+  bridge_meshnet2_meshnet4:
+    build: .
+    container_name: bridge_meshnet2_meshnet4
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=bridge_meshnet2_meshnet4
+    - LISTEN_PORT=5125
+    - NEXT_NODES=node33:5033,node110:5110,node105:5105
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - bridge_meshnet2_meshnet4
+      meshnet4:
+        aliases:
+        - bridge_meshnet2_meshnet4
+  bridge_meshnet3_meshnet4:
+    build: .
+    container_name: bridge_meshnet3_meshnet4
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=bridge_meshnet3_meshnet4
+    - LISTEN_PORT=5126
+    - NEXT_NODES=node75:5075,node62:5062,node117:5117
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - bridge_meshnet3_meshnet4
+      meshnet4:
+        aliases:
+        - bridge_meshnet3_meshnet4
+  node1:
+    build: .
+    container_name: node1
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node1
+    - LISTEN_PORT=5001
+    - NEXT_NODES=node18:5018,node30:5030,node11:5011
+    - START_NODE=true
+    networks:
+      meshnet1:
+        aliases:
+        - node1
+  node10:
+    build: .
+    container_name: node10
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node10
+    - LISTEN_PORT=5010
+    - NEXT_NODES=node11:5011,bridge_meshnet1_meshnet3:5122,node25:5025
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node10
+  node100:
+    build: .
+    container_name: node100
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node100
+    - LISTEN_PORT=5100
+    - NEXT_NODES=node91:5091,node99:5099,node97:5097
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node100
+  node101:
+    build: .
+    container_name: node101
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node101
+    - LISTEN_PORT=5101
+    - NEXT_NODES=node107:5107,node119:5119,node103:5103
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node101
+  node102:
+    build: .
+    container_name: node102
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node102
+    - LISTEN_PORT=5102
+    - NEXT_NODES=node109:5109,node108:5108,node103:5103
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node102
+  node103:
+    build: .
+    container_name: node103
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node103
+    - LISTEN_PORT=5103
+    - NEXT_NODES=bridge_meshnet1_meshnet4:5123,bridge_meshnet2_meshnet4:5125,node111:5111
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node103
+  node104:
+    build: .
+    container_name: node104
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node104
+    - LISTEN_PORT=5104
+    - NEXT_NODES=bridge_meshnet2_meshnet4:5125,node117:5117,node120:5120
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node104
+  node105:
+    build: .
+    container_name: node105
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node105
+    - LISTEN_PORT=5105
+    - NEXT_NODES=node116:5116,node118:5118,node100:5100
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node105
+  node106:
+    build: .
+    container_name: node106
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node106
+    - LISTEN_PORT=5106
+    - NEXT_NODES=bridge_meshnet3_meshnet4:5126,node101:5101,node110:5110
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node106
+  node107:
+    build: .
+    container_name: node107
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node107
+    - LISTEN_PORT=5107
+    - NEXT_NODES=node102:5102,node117:5117,node118:5118
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node107
+  node108:
+    build: .
+    container_name: node108
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node108
+    - LISTEN_PORT=5108
+    - NEXT_NODES=node106:5106,bridge_meshnet1_meshnet4:5123,node110:5110
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node108
+  node109:
+    build: .
+    container_name: node109
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node109
+    - LISTEN_PORT=5109
+    - NEXT_NODES=node118:5118,node104:5104,node100:5100
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node109
+  node11:
+    build: .
+    container_name: node11
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node11
+    - LISTEN_PORT=5011
+    - NEXT_NODES=node29:5029,node4:5004,node20:5020
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node11
+  node110:
+    build: .
+    container_name: node110
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node110
+    - LISTEN_PORT=5110
+    - NEXT_NODES=node91:5091,node98:5098,node118:5118
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node110
+  node111:
+    build: .
+    container_name: node111
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node111
+    - LISTEN_PORT=5111
+    - NEXT_NODES=node120:5120,node101:5101,node104:5104
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node111
+  node112:
+    build: .
+    container_name: node112
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node112
+    - LISTEN_PORT=5112
+    - NEXT_NODES=node119:5119,node115:5115,node110:5110
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node112
+  node113:
+    build: .
+    container_name: node113
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node113
+    - LISTEN_PORT=5113
+    - NEXT_NODES=node93:5093,node95:5095,node92:5092
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node113
+  node114:
+    build: .
+    container_name: node114
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node114
+    - LISTEN_PORT=5114
+    - NEXT_NODES=node92:5092,node107:5107,node93:5093
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node114
+  node115:
+    build: .
+    container_name: node115
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node115
+    - LISTEN_PORT=5115
+    - NEXT_NODES=node109:5109,node99:5099,node110:5110
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node115
+  node116:
+    build: .
+    container_name: node116
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node116
+    - LISTEN_PORT=5116
+    - NEXT_NODES=node99:5099,node103:5103,node93:5093
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node116
+  node117:
+    build: .
+    container_name: node117
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node117
+    - LISTEN_PORT=5117
+    - NEXT_NODES=node96:5096,node119:5119,node94:5094
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node117
+  node118:
+    build: .
+    container_name: node118
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node118
+    - LISTEN_PORT=5118
+    - NEXT_NODES=node103:5103,node94:5094,bridge_meshnet3_meshnet4:5126
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node118
+  node119:
+    build: .
+    container_name: node119
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node119
+    - LISTEN_PORT=5119
+    - NEXT_NODES=node98:5098,node91:5091,node102:5102
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node119
+  node12:
+    build: .
+    container_name: node12
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node12
+    - LISTEN_PORT=5012
+    - NEXT_NODES=node5:5005,node7:5007,node30:5030
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node12
+  node120:
+    build: .
+    container_name: node120
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node120
+    - LISTEN_PORT=5120
+    - NEXT_NODES=node100:5100,node118:5118,node112:5112
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node120
+  node13:
+    build: .
+    container_name: node13
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node13
+    - LISTEN_PORT=5013
+    - NEXT_NODES=node20:5020,bridge_meshnet1_meshnet3:5122,node8:5008
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node13
+  node14:
+    build: .
+    container_name: node14
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node14
+    - LISTEN_PORT=5014
+    - NEXT_NODES=node22:5022,node25:5025,bridge_meshnet1_meshnet4:5123
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node14
+  node15:
+    build: .
+    container_name: node15
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node15
+    - LISTEN_PORT=5015
+    - NEXT_NODES=node30:5030,node19:5019,node10:5010
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node15
+  node16:
+    build: .
+    container_name: node16
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node16
+    - LISTEN_PORT=5016
+    - NEXT_NODES=node1:5001,node12:5012,bridge_meshnet1_meshnet4:5123
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node16
+  node17:
+    build: .
+    container_name: node17
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node17
+    - LISTEN_PORT=5017
+    - NEXT_NODES=node25:5025,node7:5007,node28:5028
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node17
+  node18:
+    build: .
+    container_name: node18
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node18
+    - LISTEN_PORT=5018
+    - NEXT_NODES=node23:5023,node14:5014,node25:5025
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node18
+  node19:
+    build: .
+    container_name: node19
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node19
+    - LISTEN_PORT=5019
+    - NEXT_NODES=node5:5005,node11:5011,node21:5021
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node19
+  node2:
+    build: .
+    container_name: node2
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node2
+    - LISTEN_PORT=5002
+    - NEXT_NODES=node6:5006,bridge_meshnet1_meshnet4:5123,node10:5010
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node2
+  node20:
+    build: .
+    container_name: node20
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node20
+    - LISTEN_PORT=5020
+    - NEXT_NODES=node4:5004,node17:5017,node26:5026
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node20
+  node21:
+    build: .
+    container_name: node21
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node21
+    - LISTEN_PORT=5021
+    - NEXT_NODES=node26:5026,node6:5006,node29:5029
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node21
+  node22:
+    build: .
+    container_name: node22
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node22
+    - LISTEN_PORT=5022
+    - NEXT_NODES=node24:5024,node18:5018,node16:5016
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node22
+  node23:
+    build: .
+    container_name: node23
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node23
+    - LISTEN_PORT=5023
+    - NEXT_NODES=node20:5020,node8:5008,bridge_meshnet1_meshnet2:5121
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node23
+  node24:
+    build: .
+    container_name: node24
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node24
+    - LISTEN_PORT=5024
+    - NEXT_NODES=node3:5003,node20:5020,node6:5006
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node24
+  node25:
+    build: .
+    container_name: node25
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node25
+    - LISTEN_PORT=5025
+    - NEXT_NODES=node16:5016,node9:5009,node17:5017
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node25
+  node26:
+    build: .
+    container_name: node26
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node26
+    - LISTEN_PORT=5026
+    - NEXT_NODES=node30:5030,node12:5012,node22:5022
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node26
+  node27:
+    build: .
+    container_name: node27
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node27
+    - LISTEN_PORT=5027
+    - NEXT_NODES=node24:5024,node4:5004,node8:5008
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node27
+  node28:
+    build: .
+    container_name: node28
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node28
+    - LISTEN_PORT=5028
+    - NEXT_NODES=node16:5016,node24:5024,bridge_meshnet1_meshnet2:5121
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node28
+  node29:
+    build: .
+    container_name: node29
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node29
+    - LISTEN_PORT=5029
+    - NEXT_NODES=node9:5009,node1:5001,node23:5023
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node29
+  node3:
+    build: .
+    container_name: node3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node3
+    - LISTEN_PORT=5003
+    - NEXT_NODES=node19:5019,node10:5010,node24:5024
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node3
+  node30:
+    build: .
+    container_name: node30
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node30
+    - LISTEN_PORT=5030
+    - NEXT_NODES=node17:5017,bridge_meshnet1_meshnet4:5123,node2:5002
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node30
+  node31:
+    build: .
+    container_name: node31
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node31
+    - LISTEN_PORT=5031
+    - NEXT_NODES=node54:5054,node41:5041,node59:5059
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node31
+  node32:
+    build: .
+    container_name: node32
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node32
+    - LISTEN_PORT=5032
+    - NEXT_NODES=node43:5043,node44:5044,node42:5042
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node32
+  node33:
+    build: .
+    container_name: node33
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node33
+    - LISTEN_PORT=5033
+    - NEXT_NODES=node34:5034,node55:5055,node40:5040
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node33
+  node34:
+    build: .
+    container_name: node34
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node34
+    - LISTEN_PORT=5034
+    - NEXT_NODES=node42:5042,node43:5043,node51:5051
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node34
+  node35:
+    build: .
+    container_name: node35
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node35
+    - LISTEN_PORT=5035
+    - NEXT_NODES=node47:5047,bridge_meshnet1_meshnet2:5121,node55:5055
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node35
+  node36:
+    build: .
+    container_name: node36
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node36
+    - LISTEN_PORT=5036
+    - NEXT_NODES=node53:5053,node55:5055,node54:5054
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node36
+  node37:
+    build: .
+    container_name: node37
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node37
+    - LISTEN_PORT=5037
+    - NEXT_NODES=node36:5036,node59:5059,node52:5052
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node37
+  node38:
+    build: .
+    container_name: node38
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node38
+    - LISTEN_PORT=5038
+    - NEXT_NODES=node36:5036,node39:5039,node55:5055
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node38
+  node39:
+    build: .
+    container_name: node39
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node39
+    - LISTEN_PORT=5039
+    - NEXT_NODES=bridge_meshnet2_meshnet3:5124,node45:5045,node38:5038
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node39
+  node4:
+    build: .
+    container_name: node4
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node4
+    - LISTEN_PORT=5004
+    - NEXT_NODES=node9:5009,node13:5013,bridge_meshnet1_meshnet3:5122
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node4
+  node40:
+    build: .
+    container_name: node40
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node40
+    - LISTEN_PORT=5040
+    - NEXT_NODES=node43:5043,node42:5042,node50:5050
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node40
+  node41:
+    build: .
+    container_name: node41
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node41
+    - LISTEN_PORT=5041
+    - NEXT_NODES=node50:5050,node46:5046,node51:5051
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node41
+  node42:
+    build: .
+    container_name: node42
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node42
+    - LISTEN_PORT=5042
+    - NEXT_NODES=node43:5043,bridge_meshnet2_meshnet4:5125,node60:5060
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node42
+  node43:
+    build: .
+    container_name: node43
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node43
+    - LISTEN_PORT=5043
+    - NEXT_NODES=bridge_meshnet1_meshnet2:5121,node39:5039,node37:5037
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node43
+  node44:
+    build: .
+    container_name: node44
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node44
+    - LISTEN_PORT=5044
+    - NEXT_NODES=node55:5055,node52:5052,node48:5048
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node44
+  node45:
+    build: .
+    container_name: node45
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node45
+    - LISTEN_PORT=5045
+    - NEXT_NODES=node55:5055,node52:5052,node32:5032
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node45
+  node46:
+    build: .
+    container_name: node46
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node46
+    - LISTEN_PORT=5046
+    - NEXT_NODES=bridge_meshnet1_meshnet2:5121,node50:5050,node34:5034
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node46
+  node47:
+    build: .
+    container_name: node47
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node47
+    - LISTEN_PORT=5047
+    - NEXT_NODES=node52:5052,node34:5034,node60:5060
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node47
+  node48:
+    build: .
+    container_name: node48
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node48
+    - LISTEN_PORT=5048
+    - NEXT_NODES=node39:5039,bridge_meshnet2_meshnet3:5124,node58:5058
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node48
+  node49:
+    build: .
+    container_name: node49
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node49
+    - LISTEN_PORT=5049
+    - NEXT_NODES=node56:5056,node39:5039,bridge_meshnet1_meshnet2:5121
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node49
+  node5:
+    build: .
+    container_name: node5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node5
+    - LISTEN_PORT=5005
+    - NEXT_NODES=node12:5012,node2:5002,bridge_meshnet1_meshnet4:5123
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node5
+  node50:
+    build: .
+    container_name: node50
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node50
+    - LISTEN_PORT=5050
+    - NEXT_NODES=node54:5054,node41:5041,node51:5051
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node50
+  node51:
+    build: .
+    container_name: node51
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node51
+    - LISTEN_PORT=5051
+    - NEXT_NODES=node45:5045,node59:5059,bridge_meshnet2_meshnet4:5125
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node51
+  node52:
+    build: .
+    container_name: node52
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node52
+    - LISTEN_PORT=5052
+    - NEXT_NODES=node57:5057,node42:5042,node38:5038
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node52
+  node53:
+    build: .
+    container_name: node53
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node53
+    - LISTEN_PORT=5053
+    - NEXT_NODES=bridge_meshnet1_meshnet2:5121,node51:5051,node40:5040
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node53
+  node54:
+    build: .
+    container_name: node54
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node54
+    - LISTEN_PORT=5054
+    - NEXT_NODES=node53:5053,node50:5050,node58:5058
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node54
+  node55:
+    build: .
+    container_name: node55
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node55
+    - LISTEN_PORT=5055
+    - NEXT_NODES=node59:5059,node48:5048,node43:5043
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node55
+  node56:
+    build: .
+    container_name: node56
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node56
+    - LISTEN_PORT=5056
+    - NEXT_NODES=node43:5043,node34:5034,node49:5049
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node56
+  node57:
+    build: .
+    container_name: node57
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node57
+    - LISTEN_PORT=5057
+    - NEXT_NODES=bridge_meshnet1_meshnet2:5121,node46:5046,node42:5042
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node57
+  node58:
+    build: .
+    container_name: node58
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node58
+    - LISTEN_PORT=5058
+    - NEXT_NODES=node51:5051,node47:5047,node52:5052
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node58
+  node59:
+    build: .
+    container_name: node59
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node59
+    - LISTEN_PORT=5059
+    - NEXT_NODES=bridge_meshnet1_meshnet2:5121,node47:5047,node49:5049
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node59
+  node6:
+    build: .
+    container_name: node6
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node6
+    - LISTEN_PORT=5006
+    - NEXT_NODES=node7:5007,node12:5012,node20:5020
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node6
+  node60:
+    build: .
+    container_name: node60
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node60
+    - LISTEN_PORT=5060
+    - NEXT_NODES=node42:5042,node56:5056,node55:5055
+    - START_NODE=false
+    networks:
+      meshnet2:
+        aliases:
+        - node60
+  node61:
+    build: .
+    container_name: node61
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node61
+    - LISTEN_PORT=5061
+    - NEXT_NODES=node80:5080,node70:5070,node66:5066
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node61
+  node62:
+    build: .
+    container_name: node62
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node62
+    - LISTEN_PORT=5062
+    - NEXT_NODES=node85:5085,node69:5069,node71:5071
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node62
+  node63:
+    build: .
+    container_name: node63
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node63
+    - LISTEN_PORT=5063
+    - NEXT_NODES=node68:5068,node90:5090,node69:5069
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node63
+  node64:
+    build: .
+    container_name: node64
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node64
+    - LISTEN_PORT=5064
+    - NEXT_NODES=bridge_meshnet3_meshnet4:5126,node62:5062,node75:5075
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node64
+  node65:
+    build: .
+    container_name: node65
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node65
+    - LISTEN_PORT=5065
+    - NEXT_NODES=bridge_meshnet2_meshnet3:5124,node81:5081,node78:5078
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node65
+  node66:
+    build: .
+    container_name: node66
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node66
+    - LISTEN_PORT=5066
+    - NEXT_NODES=node61:5061,node89:5089,node71:5071
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node66
+  node67:
+    build: .
+    container_name: node67
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node67
+    - LISTEN_PORT=5067
+    - NEXT_NODES=node62:5062,node80:5080,node85:5085
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node67
+  node68:
+    build: .
+    container_name: node68
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node68
+    - LISTEN_PORT=5068
+    - NEXT_NODES=node67:5067,node78:5078,node69:5069
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node68
+  node69:
+    build: .
+    container_name: node69
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node69
+    - LISTEN_PORT=5069
+    - NEXT_NODES=node62:5062,node74:5074,node61:5061
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node69
+  node7:
+    build: .
+    container_name: node7
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node7
+    - LISTEN_PORT=5007
+    - NEXT_NODES=node28:5028,node18:5018,node26:5026
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node7
+  node70:
+    build: .
+    container_name: node70
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node70
+    - LISTEN_PORT=5070
+    - NEXT_NODES=node76:5076,bridge_meshnet1_meshnet3:5122,node75:5075
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node70
+  node71:
+    build: .
+    container_name: node71
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node71
+    - LISTEN_PORT=5071
+    - NEXT_NODES=node77:5077,node83:5083,node67:5067
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node71
+  node72:
+    build: .
+    container_name: node72
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node72
+    - LISTEN_PORT=5072
+    - NEXT_NODES=node75:5075,node77:5077,node88:5088
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node72
+  node73:
+    build: .
+    container_name: node73
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node73
+    - LISTEN_PORT=5073
+    - NEXT_NODES=node82:5082,node90:5090,node76:5076
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node73
+  node74:
+    build: .
+    container_name: node74
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node74
+    - LISTEN_PORT=5074
+    - NEXT_NODES=node83:5083,node88:5088,node80:5080
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node74
+  node75:
+    build: .
+    container_name: node75
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node75
+    - LISTEN_PORT=5075
+    - NEXT_NODES=node67:5067,node62:5062,node68:5068
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node75
+  node76:
+    build: .
+    container_name: node76
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node76
+    - LISTEN_PORT=5076
+    - NEXT_NODES=node87:5087,node61:5061,bridge_meshnet1_meshnet3:5122
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node76
+  node77:
+    build: .
+    container_name: node77
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node77
+    - LISTEN_PORT=5077
+    - NEXT_NODES=node61:5061,node62:5062,node68:5068
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node77
+  node78:
+    build: .
+    container_name: node78
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node78
+    - LISTEN_PORT=5078
+    - NEXT_NODES=node74:5074,node79:5079,node65:5065
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node78
+  node79:
+    build: .
+    container_name: node79
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node79
+    - LISTEN_PORT=5079
+    - NEXT_NODES=node81:5081,node68:5068,node70:5070
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node79
+  node8:
+    build: .
+    container_name: node8
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node8
+    - LISTEN_PORT=5008
+    - NEXT_NODES=node1:5001,node21:5021,node15:5015
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node8
+  node80:
+    build: .
+    container_name: node80
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node80
+    - LISTEN_PORT=5080
+    - NEXT_NODES=node76:5076,node68:5068,bridge_meshnet1_meshnet3:5122
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node80
+  node81:
+    build: .
+    container_name: node81
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node81
+    - LISTEN_PORT=5081
+    - NEXT_NODES=node88:5088,node79:5079,node84:5084
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node81
+  node82:
+    build: .
+    container_name: node82
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node82
+    - LISTEN_PORT=5082
+    - NEXT_NODES=node68:5068,node74:5074,node81:5081
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node82
+  node83:
+    build: .
+    container_name: node83
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node83
+    - LISTEN_PORT=5083
+    - NEXT_NODES=node89:5089,node81:5081,node87:5087
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node83
+  node84:
+    build: .
+    container_name: node84
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node84
+    - LISTEN_PORT=5084
+    - NEXT_NODES=node65:5065,node71:5071,node86:5086
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node84
+  node85:
+    build: .
+    container_name: node85
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node85
+    - LISTEN_PORT=5085
+    - NEXT_NODES=node77:5077,node88:5088,node67:5067
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node85
+  node86:
+    build: .
+    container_name: node86
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node86
+    - LISTEN_PORT=5086
+    - NEXT_NODES=bridge_meshnet3_meshnet4:5126,node78:5078,node61:5061
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node86
+  node87:
+    build: .
+    container_name: node87
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node87
+    - LISTEN_PORT=5087
+    - NEXT_NODES=node67:5067,node85:5085,node89:5089
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node87
+  node88:
+    build: .
+    container_name: node88
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node88
+    - LISTEN_PORT=5088
+    - NEXT_NODES=node82:5082,node70:5070,node80:5080
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node88
+  node89:
+    build: .
+    container_name: node89
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node89
+    - LISTEN_PORT=5089
+    - NEXT_NODES=node90:5090,node78:5078,node69:5069
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node89
+  node9:
+    build: .
+    container_name: node9
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node9
+    - LISTEN_PORT=5009
+    - NEXT_NODES=node6:5006,node16:5016,node13:5013
+    - START_NODE=false
+    networks:
+      meshnet1:
+        aliases:
+        - node9
+  node90:
+    build: .
+    container_name: node90
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node90
+    - LISTEN_PORT=5090
+    - NEXT_NODES=node73:5073,node89:5089,node87:5087
+    - START_NODE=false
+    networks:
+      meshnet3:
+        aliases:
+        - node90
+  node91:
+    build: .
+    container_name: node91
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node91
+    - LISTEN_PORT=5091
+    - NEXT_NODES=node109:5109,bridge_meshnet1_meshnet4:5123,node103:5103
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node91
+  node92:
+    build: .
+    container_name: node92
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node92
+    - LISTEN_PORT=5092
+    - NEXT_NODES=node113:5113,node114:5114,node107:5107
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node92
+  node93:
+    build: .
+    container_name: node93
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node93
+    - LISTEN_PORT=5093
+    - NEXT_NODES=node106:5106,node98:5098,node114:5114
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node93
+  node94:
+    build: .
+    container_name: node94
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node94
+    - LISTEN_PORT=5094
+    - NEXT_NODES=node95:5095,node108:5108,node107:5107
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node94
+  node95:
+    build: .
+    container_name: node95
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node95
+    - LISTEN_PORT=5095
+    - NEXT_NODES=node116:5116,node97:5097,node110:5110
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node95
+  node96:
+    build: .
+    container_name: node96
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node96
+    - LISTEN_PORT=5096
+    - NEXT_NODES=node113:5113,node116:5116,node119:5119
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node96
+  node97:
+    build: .
+    container_name: node97
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node97
+    - LISTEN_PORT=5097
+    - NEXT_NODES=node117:5117,node103:5103,node94:5094
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node97
+  node98:
+    build: .
+    container_name: node98
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node98
+    - LISTEN_PORT=5098
+    - NEXT_NODES=node118:5118,bridge_meshnet1_meshnet4:5123,node110:5110
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node98
+  node99:
+    build: .
+    container_name: node99
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 20m
+    environment:
+    - NODE_NAME=node99
+    - LISTEN_PORT=5099
+    - NEXT_NODES=node109:5109,node112:5112,node94:5094
+    - START_NODE=false
+    networks:
+      meshnet4:
+        aliases:
+        - node99

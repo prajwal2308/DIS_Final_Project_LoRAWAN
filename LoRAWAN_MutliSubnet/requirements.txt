@@ -1,0 +1,6 @@
+# Required packages for the project
+pandas
+matplotlib
+seaborn
+pyyaml
+networkx

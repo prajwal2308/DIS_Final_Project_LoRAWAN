@@ -1,0 +1,51 @@
+Mesh Network Analysis Report
+==================================================
+
+1. Message Statistics
+--------------------
+Total Unique Messages: 40
+Total Nodes: 150
+Nodes That Received Messages: 150
+Nodes With No Events: 0
+TTL Expiry Events: 11
+
+2. Hop Statistics
+--------------------
+Maximum Hops: 11
+Minimum Hops: 2
+Average Hops: 5.75
+
+3. Latency Statistics
+--------------------
+Maximum Latency: 0.3327s
+Minimum Latency: 0.0s
+Average Latency: 0.0777s
+
+4. Node Activity
+--------------------
+Most Active Node: node132 (28 messages)
+Least Active Node: node123 (2 messages)
+
+5. Advanced Metrics
+--------------------
+Message Delivery Ratio (>1 receiver): 0.95
+Nodes That Participated in Forwarding: 107
+Dead-End Nodes (only received): 43
+Unique Flow Paths per Message (avg): 26.82
+6. Delivery Quality
+--------------------
+Average Delivery Ratio: 17.88%
+Total Duplicates (same msg to same node): 0
+
+7. Energy Metrics
+--------------------
+Top Energy Node: node132 with 14.0 units
+Avg Energy Used per Node: 3.58 units
+
+8. Spread Efficiency
+---------------------
+Average Spread Efficiency (reach / hops): 2.8892
+
+9. Network Fairness
+---------------------
+Jain's Fairness Index on Node Load: 0.4340

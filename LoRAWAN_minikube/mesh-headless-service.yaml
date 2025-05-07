@@ -1,0 +1,23 @@
+
+apiVersion: v1
+kind: Service #creating a Service, which provides stable networking access to a group of pods
+
+#metadata.name is the name of the service.
+metadata:
+  name: mesh-node
+
+
+# Setting clusterIP: None turns this into a headless service.
+# It doesn't load balance or assign a virtual IP.
+# Instead, it returns a list of pod IPs behind the service.
+
+# Direct pod-to-pod connections
+# StatefulSets or any peer-aware app
+
+spec:
+  clusterIP: None  # This makes it a headless service
+  selector:
+    app: mesh-node
+  ports:
+  - port: 5000
+    targetPort: 5000

@@ -1,0 +1,3 @@
+venv/
+**/collected_logs/
+.DS_Store
