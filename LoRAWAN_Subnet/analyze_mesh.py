@@ -1,8 +1,3 @@
-"""
-Combined Mesh Network Analysis Script
-This script analyzes the mesh network logs and generates comprehensive metrics and visualizations.
-"""
-
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,7 +7,7 @@ from pathlib import Path
 import yaml
 import random
 
-# Create output directory structure
+
 output_dir = Path("mesh_analysis")
 plots_dir = output_dir / "plots"
 data_dir = output_dir / "data"
@@ -20,13 +15,11 @@ output_dir.mkdir(exist_ok=True)
 plots_dir.mkdir(exist_ok=True)
 data_dir.mkdir(exist_ok=True)
 
-print("📊 Starting mesh network analysis...")
+print("Starting mesh network analysis...")
 
-# Path to collected logs
 log_dir = Path("collected_logs")
 log_files = list(log_dir.glob("*_events.json"))
 
-# Load all events
 events = []
 for file in log_files:
     with open(file) as f:
@@ -36,14 +29,12 @@ for file in log_files:
             except json.JSONDecodeError:
                 continue
 
-# Convert to DataFrame
 df = pd.DataFrame(events)
 
 if df.empty:
     print("No events found in logs.")
     exit()
 
-# Sort for clarity
 df = df.sort_values("timestamp")
 
 # Save raw merged events

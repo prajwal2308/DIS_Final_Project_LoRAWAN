@@ -1,20 +1,13 @@
 #!/bin/bash
 echo "Starting up Kubernetes Mesh Project..."
 
-# Start Minikube
-#minikube start
-#minikube delete
-
 minikube start --extra-config=kubelet.max-pods=600
 #minikube start --cpus=7 --memory=14000
 
-
-# Switching to minikube docker daemon
 eval $(minikube docker-env)
 
 docker build -t mesh-node:latest .
 
-# deploy mesh-nodes and starter node
 kubectl apply -f mesh-headless-service.yaml
 kubectl apply -f mesh-deployment.yaml
 kubectl apply -f starter-node.yaml
@@ -22,7 +15,6 @@ kubectl apply -f starter-node.yaml
 eval $(minikube docker-env -u)
 
 echo "Waiting 60 seconds for pods to stabilize..."
-# Wait until all pods are Running and none are Pending
 while true; do
     pending=$(kubectl get pods --no-headers | grep -c Pending)
     not_running=$(kubectl get pods --no-headers | grep -v Running | wc -l)
@@ -46,7 +38,6 @@ LOGS_PID=$!
 sleep 10
 kill $LOGS_PID 2>/dev/null
 
-# Wait for 15 seconds to ensure logs are available
 echo "Waiting for 15 seconds to ensure logs are available..."
 sleep 15
 
@@ -58,9 +49,6 @@ for pod in $(kubectl get pods -l app=mesh-node -o jsonpath='{.items[*].metadata.
     echo "Fetching log from $pod"
     kubectl cp $pod:/app/events.json collected_logs/${pod}_events.json 2>/dev/null || echo "No events.json found in $pod"
 
-    # Backup copy
-    # cp collected_logs/${pod}_events.json "$backup_dir/" 2>/dev/null
-    
 done
 echo "Fetch Complete"
 
@@ -75,14 +63,6 @@ mkdir report
 echo "Analysing main metrics"
 python3 analyze_mesh.py
 
-# echo "Generating a mesh Image"
-# python3 metrics/MeshImage.py
-
-#echo "Generating Mesh connection gif"
-#python3 metrics/anime.py
-#python3 metrics/animeFast.py
-
-
 
 echo "Cleaning up Kubernetes Mesh Project..."
 # Delete deployments and service
@@ -92,18 +72,16 @@ kubectl delete service mesh-node --ignore-not-found
 # Stop Minikube
 docker volume prune -f
 minikube stop
-# Remove built Docker image (inside Minikube's Docker engine)
+
 eval $(minikube docker-env)
-# Remove all containers using the mesh-node:latest image
+
 docker ps -a --filter ancestor=mesh-node:latest -q | xargs -r docker rm -f
-# Remove the mesh-node image
+
 docker rmi mesh-node:latest --force 2>/dev/null
-# Remove all dangling (unused) volumes
+
 docker volume prune -f
 
 echo " Cleanup complete."
-
-
 
 # kubectl logs deployment/mesh-starter --follow
 

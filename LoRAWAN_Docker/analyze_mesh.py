@@ -1,8 +1,3 @@
-"""
-Combined Mesh Network Analysis Script
-This script analyzes the mesh network logs and generates comprehensive metrics and visualizations.
-"""
-
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -21,7 +16,6 @@ data_dir.mkdir(exist_ok=True)
 
 print(" Starting mesh network analysis...")
 
-# Path to collected logs
 log_dir = Path("collected_logs")
 log_files = list(log_dir.glob("*_events.json"))
 
@@ -35,17 +29,12 @@ for file in log_files:
             except json.JSONDecodeError:
                 continue
 
-# Convert to DataFrame
 df = pd.DataFrame(events)
 
 if df.empty:
     print("No events found in logs.")
     exit()
-
-# Sort for clarity
 df = df.sort_values("timestamp")
-
-# Save raw merged events
 df.to_csv(data_dir / "merged_events.csv", index=False)
 print(f"Merged {len(df)} events from {len(log_files)} files.")
 
@@ -208,7 +197,7 @@ with open(data_dir / "mesh_metrics.txt", "w") as f:
         f"Least Active Node: {least_active} ({forward_counts[least_active]} messages)\n"
     )
 
-    # ----------------------------
+# ----------------------------
 # 8. Advanced Metrics & Visualizations
 # ----------------------------
 
@@ -341,9 +330,6 @@ with open(data_dir / "mesh_metrics.txt", "a") as f:
     f.write("\n9. Network Fairness\n---------------------\n")
     f.write(f"Jain's Fairness Index on Node Load: {fairness_index:.4f}\n")
 
-
-
-print("✅ Advanced metrics added and visualizations saved.")
 print("\nAnalysis complete! All outputs saved in 'mesh_analysis' directory:")
 print(f"  - Plots: {plots_dir}")
 print(f"  - Data: {data_dir}")

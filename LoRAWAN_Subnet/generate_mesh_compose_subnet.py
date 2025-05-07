@@ -25,14 +25,14 @@ for i in range(1, num_nodes + 1):
     subnet_idx = min((i - 1) // nodes_per_subnet, subnet_count - 1)
     subnet = subnet_names[subnet_idx]
 
-    # We'll fill NEXT_NODES after all services are created and bridge nodes are set
+   
     compose["services"][node_name] = {
         "build": ".",
         "container_name": node_name,
         "environment": [
             f"NODE_NAME={node_name}",
             f"LISTEN_PORT={listen_port}",
-            f"NEXT_NODES=PLACEHOLDER",  # Will fill after bridge logic
+            f"NEXT_NODES=PLACEHOLDER",  
             f"START_NODE={'true' if i == 1 else 'false'}"
         ],
         "networks": {
@@ -48,7 +48,7 @@ for i in range(1, num_nodes + 1):
         }
     }
 
-# Add bridge nodes between subnets
+
 bridge_indices = [nodes_per_subnet * (i + 1) for i in range(subnet_count - 1)]
 for idx in bridge_indices:
     if idx <= num_nodes:
@@ -61,12 +61,11 @@ for idx in bridge_indices:
                 subnet_b: {"aliases": [node_name]}
             }
 
-# Now, update NEXT_NODES for all nodes
+
 for i in range(1, num_nodes + 1):
     node_name = f"node{i}"
     service = compose["services"][node_name]
     node_networks = set(service["networks"].keys())
-    # Find all nodes that share at least one subnet with this node
     reachable_nodes = []
     for j in range(1, num_nodes + 1):
         if j == i:
@@ -76,7 +75,7 @@ for i in range(1, num_nodes + 1):
         if node_networks & other_networks:
             reachable_nodes.append(f"node{j}:{base_port + j}")
     next_nodes = random.sample(reachable_nodes, k=min(max_neighbors, len(reachable_nodes)))
-    # Update environment
+
     env = service["environment"]
     for idx, var in enumerate(env):
         if var.startswith("NEXT_NODES="):

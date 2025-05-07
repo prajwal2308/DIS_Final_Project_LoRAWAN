@@ -2,7 +2,7 @@
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
 
 print_status() {
@@ -33,16 +33,13 @@ cleanup_docker_version() {
     if [ -f "$version_dir/docker-compose.yml" ]; then
         docker-compose -f "$version_dir/docker-compose.yml" down --remove-orphans
     fi
-    # Remove all containers
+    
     docker ps -a | grep "$version_dir" | awk '{print $1}' | xargs -r docker rm -f
     
-    # Remove all images
     docker images | grep "$version_dir" | awk '{print $3}' | xargs -r docker rmi -f
     
-    # Remove all volumes
     docker volume ls | grep "$version_dir" | awk '{print $2}' | xargs -r docker volume rm -f
     
-    # Remove all networks
     docker network ls | grep "$version_dir" | awk '{print $1}' | xargs -r docker network rm
 }
 
@@ -50,23 +47,14 @@ cleanup_docker_version() {
 cleanup_minikube() {
     print_status "Cleaning up Minikube resources..."
     
-    # Stop Minikube
     minikube stop 2>/dev/null
-    
-    # Delete Minikube cluster
     minikube delete 2>/dev/null
-    
-    # Remove all containers using mesh-node image
     eval $(minikube docker-env 2>/dev/null)
     docker ps -a --filter ancestor=mesh-node:latest -q | xargs -r docker rm -f
-    
-    # Remove the mesh-node image
     docker rmi mesh-node:latest --force 2>/dev/null
-    
-    # Remove all dangling volumes
+
     docker volume prune -f
     
-    # Reset Docker environment
     eval $(minikube docker-env -u 2>/dev/null)
 }
 
@@ -80,7 +68,6 @@ setup_venv() {
         
         
         source venv/bin/activate
-        # Upgrade pip
         pip install --upgrade pip
         
         print_status "Installing common dependencies..."
@@ -95,7 +82,6 @@ setup_venv() {
         done
         
     else
-        # Activate existing virtual environment
         source venv/bin/activate
     fi
 }
@@ -137,8 +123,6 @@ run_version() {
 collect_data() {
     print_status "Collecting data files..."
     
-    
-    # Copy data files from each version
     cp LoRAWAN_Docker/mesh_analysis/data/*.txt Summary_LoRAWAN_DockerV1.txt
     cp LoRAWAN_Subnet/mesh_analysis/data/*.txt Summary_LoRAWAN_SubnetV2.txt
     cp LoRAWAN_MutliSubnet/mesh_analysis/data/*.txt Summary_LoRAWAN_MutliSubnetV3.txt
@@ -174,7 +158,6 @@ python3 AllComparision.py
 cleanup_docker
 cleanup_minikube
 
-# Deactivate virtual environment
 deactivate
 
 print_status "All versions have been executed and compared successfully!" 

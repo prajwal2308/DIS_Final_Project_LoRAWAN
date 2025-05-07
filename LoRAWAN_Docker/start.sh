@@ -11,12 +11,11 @@ docker-compose up -d --build &
 DOCKER_PID=$!
 
 echo "Waiting for containers to initialize..."
-sleep 15  # Increased sleep time to ensure all containers are ready
+sleep 15  
 
 echo "Checking container status"
 docker-compose ps
 
-# Wait for all containers to be healthy
 echo "Waiting for containers to be healthy..."
 while true; do
     if docker-compose ps | grep -q "unhealthy"; then
@@ -28,7 +27,6 @@ while true; do
     fi
 done
 
-# Wait for the background process to complete
 wait $DOCKER_PID
 sleep 10
 echo "Showing node communication logs for 15 seconds..."
@@ -50,15 +48,9 @@ done
 echo "✅ Done fetching logs. Check ./collected_logs/"
 
 
-
-
-# Run analysis scripts
 echo "Running analysis scripts..."
 python analyze_mesh.py
-
 echo "Analysis complete."
-
 echo "Run ( docker-compose down )to stop and remove containers"
-
 docker-compose down
 echo "Cleanup complete. Exiting."

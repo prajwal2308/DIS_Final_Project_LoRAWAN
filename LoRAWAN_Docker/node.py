@@ -53,7 +53,7 @@ def send_sensor_data_periodically():
             except Exception as e:
                 print(f"[{NODE_NAME}] Error sending to {target}: {e}", flush=True)
 
-        time.sleep(10)  # send new reading every 10 seconds
+        time.sleep(10)  
 
 def listen_and_forward():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -71,7 +71,7 @@ def listen_and_forward():
             msg_id = msg.get("id")
 
             if msg_id in RECEIVED_IDS:
-                continue  # duplicate
+                continue 
 
             RECEIVED_IDS.add(msg_id)
             msg["hop"] += 1

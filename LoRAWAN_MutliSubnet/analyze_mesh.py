@@ -1,8 +1,3 @@
-"""
-Combined Mesh Network Analysis Script
-This script analyzes the mesh network logs and generates comprehensive metrics and visualizations.
-"""
-
 import json
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,7 +7,7 @@ from pathlib import Path
 import yaml
 import random
 
-# Create output directory structure
+
 output_dir = Path("mesh_analysis")
 plots_dir = output_dir / "plots"
 data_dir = output_dir / "data"
@@ -20,9 +15,8 @@ output_dir.mkdir(exist_ok=True)
 plots_dir.mkdir(exist_ok=True)
 data_dir.mkdir(exist_ok=True)
 
-print("📊 Starting mesh network analysis...")
+print("Starting mesh network analysis...")
 
-# Path to collected logs
 log_dir = Path("collected_logs")
 log_files = list(log_dir.glob("*_events.json"))
 
@@ -43,10 +37,7 @@ if df.empty:
     print("No events found in logs.")
     exit()
 
-# Sort for clarity
 df = df.sort_values("timestamp")
-
-# Save raw merged events
 df.to_csv(data_dir / "merged_events.csv", index=False)
 print(f"Merged {len(df)} events from {len(log_files)} files.")
 
@@ -316,11 +307,8 @@ def generate_mesh_topology():
             )
 
     plt.figure(figsize=(15, 15))
-    
-    # Draw edges
-    nx.draw_networkx_edges(G, pos, edge_color='gray', alpha=0.5, arrows=True, arrowsize=10)
 
-    # Draw nodes with subnet-based coloring
+    nx.draw_networkx_edges(G, pos, edge_color='gray', alpha=0.5, arrows=True, arrowsize=10)
     for subnet, color in subnet_colors.items():
         subnet_nodes = [n for n in G.nodes() if subnet in G.nodes[n]['subnets']]
         nx.draw_networkx_nodes(G, pos, nodelist=subnet_nodes, node_color=color, 
@@ -335,8 +323,6 @@ def generate_mesh_topology():
     labels = {node: f"{node}\n({','.join(G.nodes[node]['subnets'])})" 
              for node in G.nodes()}
     nx.draw_networkx_labels(G, pos, labels, font_size=8)
-
-    # Add subnet labels
     for subnet, (x, y) in subnet_positions.items():
         plt.text(x, y + 0.4, subnet, fontsize=12, ha='center', 
                 bbox=dict(facecolor=subnet_colors[subnet], alpha=0.5))

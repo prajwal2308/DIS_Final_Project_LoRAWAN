@@ -6,18 +6,12 @@ import seaborn as sns
 import numpy as np
 import glob
 
-# Set style for better visualizations
+
 plt.style.use('ggplot')
 sns.set_theme(style="whitegrid")
-
-
-
-# Dynamically detect version files and build VERSIONS dictionary
 version_files = glob.glob("Summary_LoRAWAN*.txt")
 VERSIONS = {}
 for vf in version_files:
-    # Extract version name from filename, e.g. V1LoRAWAN_DockerV1.txt -> Docker V1
-    # This extraction logic can be adjusted as needed
     if "DockerV1" in vf:
         version_name = "Docker V1"
     elif "SubnetV2" in vf:
@@ -78,10 +72,9 @@ for version, path in VERSIONS.items():
 
 df = pd.DataFrame(rows).set_index("Version")
 
-# Create a directory for plots
+
 os.makedirs("comparison_plots", exist_ok=True)
 
-# Create a figure with subplots
 plt.figure(figsize=(20, 15))
 
 # 1. Network Performance Metrics
@@ -157,7 +150,6 @@ plt.tight_layout()
 plt.savefig("comparison_plots/network_dashboard.png", bbox_inches='tight', dpi=300)
 plt.close()
 
-# Create a second figure for additional metrics
 plt.figure(figsize=(20, 15))
 
 

@@ -47,7 +47,7 @@ def send_sensor_data_periodically():
                 ip, port = target.strip().split(":")
                 port = int(port)
 
-                target_node = ip.split('.')[0]  # Assuming aliases like node23
+                target_node = ip.split('.')[0]  
                 target_subnet = None
                 for s in SUBNETS:
                     if s in target_node:
@@ -75,7 +75,7 @@ def send_sensor_data_periodically():
             except Exception as e:
                 print(f"[{NODE_NAME}] Error sending to {target}: {e}", flush=True)
 
-        time.sleep(10)  # send new reading every 10 seconds
+        time.sleep(10)  
 
 def listen_and_forward():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -125,7 +125,7 @@ def listen_and_forward():
                 ip, port = target.strip().split(":")
                 port = int(port)
 
-                target_node = ip.split('.')[0]  # Assuming aliases like node23
+                target_node = ip.split('.')[0] 
                 target_subnet = None
                 for s in SUBNETS:
                     if s in target_node:

@@ -21,7 +21,7 @@ def send_sensor_data_periodically():
     if not START_NODE:
         return
 
-    time.sleep(3)  # buffer so receivers are ready
+    time.sleep(3)
 
     while True:
         msg_id = str(uuid.uuid4())
@@ -47,7 +47,7 @@ def send_sensor_data_periodically():
                 ip, port = target.strip().split(":")
                 port = int(port)
 
-                target_node = ip.split('.')[0]  # Assuming aliases like node23
+                target_node = ip.split('.')[0] 
                 target_subnet = None
                 for s in SUBNETS:
                     if s in target_node:
@@ -75,7 +75,7 @@ def send_sensor_data_periodically():
             except Exception as e:
                 print(f"[{NODE_NAME}] Error sending to {target}: {e}", flush=True)
 
-        time.sleep(10)  # send new reading every 10 seconds
+        time.sleep(10) 
 
 def listen_and_forward():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -93,15 +93,13 @@ def listen_and_forward():
             msg_id = msg.get("id")
 
             if msg_id in RECEIVED_IDS:
-                continue  # duplicate
+                continue  
 
             RECEIVED_IDS.add(msg_id)
             msg["hop"] += 1
             msg["ttl"] -= 1
 
             print(f"[{NODE_NAME}] Received: {msg}", flush=True)
-
-            # log it
             log_entry = {
                 "node": NODE_NAME,
                 "from": addr[0],
@@ -125,7 +123,7 @@ def listen_and_forward():
                 ip, port = target.strip().split(":")
                 port = int(port)
 
-                target_node = ip.split('.')[0]  # Assuming aliases like node23
+                target_node = ip.split('.')[0] 
                 target_subnet = None
                 for s in SUBNETS:
                     if s in target_node:
