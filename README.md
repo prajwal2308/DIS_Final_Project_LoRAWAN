@@ -38,6 +38,8 @@ There are multiple version of scripts. Use of first version is recommended.<br>
 - Python scripts `AllComparision.py` is run from within shart_*_versions script for analysis.
 
 ## Comparision Plots and Visual analysis
+
+- Metrics depend on the load on CPU, Better CPU handles load, minikube performs better.
 - Once `start_*_version.sh` is ran, It automatically fetches the summay of metrics and stores in the root directry and it can be found under `comparision_plots` dir.
 - Additionally for each version, All the plots related to metrics is stored under `Report*_LoRAWAN_*` directory
 - Summary text file is stored in `Summary_LoRAWAN_*.txt `
